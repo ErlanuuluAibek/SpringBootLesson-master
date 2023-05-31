@@ -25,7 +25,7 @@ public class StudentService {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.STUDENT);
         Group group = groupRepository.findById(request.getGroupId()).get();
         user.setGroup(group);
@@ -43,6 +43,7 @@ public class StudentService {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
+                .groupName(user.getGroup().getGroupName())
                 .roleName(user.getRole().name())
                 .build();
 
@@ -73,5 +74,8 @@ public class StudentService {
     public String delete(Long studentId){
         userRepository.deleteById(studentId);
         return "Successfully deleted student with id: "+studentId;
+    }
+    public List<User> getAllStudent(){
+        return userRepository.getAllStudents();
     }
 }

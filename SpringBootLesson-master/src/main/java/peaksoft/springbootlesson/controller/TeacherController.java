@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.springbootlesson.dto.*;
 import peaksoft.springbootlesson.service.TeacherService;
+import peaksoft.springbootlesson.service.UserService;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @RequestMapping("/api/teachers")
 public class TeacherController {
     private final TeacherService service;
+    private final UserService userService;
     @GetMapping()
     public List<TeacherResponse> getAll(){
         return service.getAll();
@@ -37,4 +39,10 @@ public class TeacherController {
     public TeacherResponse changeRole(@PathVariable("id") Long id,@RequestBody ChangeRoleRequest request){
         return service.changeRole(id,request);
     }
+//    @GetMapping
+//    public UserResponseView getAllUsers(@RequestParam(name = "text",required = false)String text,
+//                                               @RequestParam int page,
+//                                               @RequestParam int size){
+//        return userService.searchAndPagination(text,page,size);
+//    }
 }

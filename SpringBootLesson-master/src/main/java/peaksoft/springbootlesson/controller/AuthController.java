@@ -28,16 +28,16 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     @PostMapping("sign-up")
     @Operation(summary = "Sign up",description = "User can register")
-    public UserResponse signUpa(@RequestBody UserRequest userRequest){
+    public UserResponse signUp(@RequestBody UserRequest userRequest){
        return userService.create(userRequest);
     }
     @PostMapping("sign-in")
     @Operation(summary = "Sign in ",description = "User can Sign in")
     public LoginResponse signIn(@RequestBody LoginRequest loginRequest){
         UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword());
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword());
         authenticationManager.authenticate(token);
-        User user = userRepository.findByUsername(token.getName()).get();
+        User user = userRepository.findByEmail(token.getName()).get();
         return loginMapper.loginView(jwtTokenUtil.generateToken(user),"Successful",user);
     }
 }

@@ -11,11 +11,11 @@ import java.time.LocalDate;
 @Builder
 public class TeacherResponse {
     private Long id;
-    private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     private String roleName;
     private LocalDate localDate;
+    private String courseName;
 }

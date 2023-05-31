@@ -58,7 +58,7 @@ public class CourseService {
     }
     public CourseResponse mapToResponse(Course course){
         CourseResponse courseResponse = new CourseResponse();
-        courseResponse.setLocalDate(courseResponse.getLocalDate());
+        courseResponse.setLocalDate(course.getLocalDate());
         courseResponse.setCourseName(course.getCourseName());
         courseResponse.setCompanyName(course.getCompany().getCompanyName());
         courseResponse.setDurationMonth(course.getDurationMonth());
@@ -66,22 +66,5 @@ public class CourseService {
         courseResponse.setIsDeleted(course.getIsDeleted());
         return courseResponse;
     }
-    public List<CourseResponse> view (List<Course>courses){
-        List<CourseResponse> courseResponses = new ArrayList<>();
-        for (Course course:courses){
-            courseResponses.add(mapToResponse(course));
-        }
-        return courseResponses;
-    }
-    public CourseResponseView searchAndPagination(String text, int page, int size){
-        Pageable pageable= PageRequest.of(page-1,size);
-        CourseResponseView courseResponseView = new CourseResponseView();
-        courseResponseView.setCourseResponses(view(search(text,pageable)));
-        return courseResponseView;
-    }
 
-    private List<Course> search(String text, Pageable pageable){
-        String name = text ==null?"": text;
-        return courseRepository.searchAndPagination(name.toUpperCase(), pageable);
-    }
 }

@@ -52,12 +52,12 @@ public class JwtTokenUtil {
         return expiration.before(new Date());
     }
 
-    public String getUserNameFromToken(String token) {
+    public String getEmailFromToken(String token) {
         return getClaimsFromToken(token, Claims::getSubject);
     }
 
     public Boolean validationToken(String token, UserDetails userDetails) {
-        final String username = getUserNameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpiration(token));
+        final String email = getEmailFromToken(token);
+        return (email.equals(userDetails.getUsername()) && !isTokenExpiration(token));
     }
 }

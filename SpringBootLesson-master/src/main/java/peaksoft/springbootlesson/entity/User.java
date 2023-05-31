@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +28,7 @@ public class User implements UserDetails {
     private Long id;
     private String firstName;
     private String lastName;
+    @Email
     private String email;
     private String password;
     @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
@@ -49,7 +51,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getUsername();
+        return getEmail();
     }
 
     @Override

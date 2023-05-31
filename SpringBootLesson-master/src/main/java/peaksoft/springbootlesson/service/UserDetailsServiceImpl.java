@@ -14,9 +14,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private  UserRepository userRepository;
 
-
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("User not found with name "+username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found with name "+email));
     }
 
 
