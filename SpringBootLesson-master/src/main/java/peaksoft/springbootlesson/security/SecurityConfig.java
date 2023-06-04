@@ -21,21 +21,22 @@ import peaksoft.springbootlesson.service.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(securedEnabled = true
-        ,prePostEnabled = true
-        ,jsr250Enabled = true)
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        prePostEnabled = true,
+        jsr250Enabled = true
+)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-   private final UserDetailsServiceImpl userDetailsService;
-   private final JwtTokenFilter jwtTokenFilter;
-   @Bean
-   public BCryptPasswordEncoder bCryptPasswordEncoder(){
-       return new BCryptPasswordEncoder();
-   }
+    private final UserDetailsServiceImpl userDetailsService;
+    private final JwtTokenFilter jwtTokenFilter;
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-
     }
 
     @Override
@@ -50,7 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/jwt/**").permitAll()
                 .antMatchers("/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/companies").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()

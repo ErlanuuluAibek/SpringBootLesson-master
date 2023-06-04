@@ -29,6 +29,7 @@ public class StudentService {
         user.setRole(Role.STUDENT);
         Group group = groupRepository.findById(request.getGroupId()).get();
         user.setGroup(group);
+        user.setLocalDate(LocalDate.now());
         userRepository.save(user);
         return mapToResponse(user);
     }
@@ -41,10 +42,11 @@ public class StudentService {
     public StudentResponse mapToResponse(User user){
         return StudentResponse.builder()
                 .firstName(user.getFirstName())
-                .lastName(user.getLastName())
                 .email(user.getEmail())
+                .lastName(user.getLastName())
                 .groupName(user.getGroup().getGroupName())
                 .roleName(user.getRole().name())
+                .localDate(user.getLocalDate())
                 .build();
 
     }
@@ -65,7 +67,7 @@ public class StudentService {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         Group group = groupRepository.findById(request.getGroupId()).get();
         user.setGroup(group);
         userRepository.save(user);
@@ -75,7 +77,18 @@ public class StudentService {
         userRepository.deleteById(studentId);
         return "Successfully deleted student with id: "+studentId;
     }
-    public List<User> getAllStudent(){
-        return userRepository.getAllStudents();
+    public List<StudentResponse> getAllStudent(){
+        List<User> users = userRepository.findAll();
+        List<User> students = new ArrayList<>();
+        for(User user : users){
+            if(user.getRole().getAuthority().equals("STUDENT")){
+                students.add(user);
+            }
+        }
+        List<StudentResponse> responses = new ArrayList<>();
+        for (User user : students){
+            responses.add(mapToResponse(user));
+        }
+        return responses;
     }
 }

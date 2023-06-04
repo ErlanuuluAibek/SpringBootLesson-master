@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import peaksoft.springbootlesson.dto.ChangeRoleRequest;
 import peaksoft.springbootlesson.dto.UserRequest;
 import peaksoft.springbootlesson.dto.UserResponse;
+import peaksoft.springbootlesson.dto.UserResponseView;
 import peaksoft.springbootlesson.service.UserService;
 
 import java.util.List;
@@ -40,7 +41,12 @@ public class UserController {
     public UserResponse changeRole(@PathVariable("id") Long id,@RequestBody ChangeRoleRequest request){
         return userService.changeRole(id,request);
     }
-
+    @GetMapping("all")
+    public UserResponseView getAllUsers(@RequestParam(name = "text",required = false)String text,
+                                        @RequestParam int page,
+                                        @RequestParam int size){
+        return userService.searchAndPagination(text,page,size);
+    }
 
 
 }

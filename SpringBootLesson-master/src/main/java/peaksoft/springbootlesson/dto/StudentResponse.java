@@ -10,11 +10,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
-public class StudentResponse {
+public class  StudentResponse {
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
     private String groupName;
     private String roleName;
+    private LocalDate localDate;
 }

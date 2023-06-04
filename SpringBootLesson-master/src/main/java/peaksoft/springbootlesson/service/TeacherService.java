@@ -37,7 +37,7 @@ public class TeacherService {
             throw new EntityExistsException("Course all ready exist");
         }
         user.setRole(Role.INSTRUCTOR);
-        user.setCreatedDate(LocalDate.now());
+        user.setLocalDate(LocalDate.now());
         teacherRepository.save(user);
         return mapToResponse(user);
     }
@@ -49,7 +49,7 @@ public class TeacherService {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .roleName(user.getRole().name())
-                .localDate(user.getCreatedDate()).build();
+                .localDate(user.getLocalDate()).build();
 
     }
     public TeacherResponse changeRole(Long userId, ChangeRoleRequest request){
@@ -83,8 +83,19 @@ public class TeacherService {
         teacherRepository.deleteById(teacherId);
         return "Successfully deleted user with id: "+teacherId;
     }
-    public List<User> getAllTeacher (){
-        return teacherRepository.getAllTeachers();
+    public List<TeacherResponse> getAllTeacher (){
+        List<User> users = teacherRepository.findAll();
+        List<User> teachers = new ArrayList<>();
+        for(User user : users){
+            if(user.getRole().getAuthority().equals("INSTRUCTOR")){
+                teachers.add(user);
+            }
+        }
+        List<TeacherResponse> responses = new ArrayList<>();
+        for (User user : teachers){
+            responses.add(mapToResponse(user));
+        }
+        return responses;
     }
 
 }

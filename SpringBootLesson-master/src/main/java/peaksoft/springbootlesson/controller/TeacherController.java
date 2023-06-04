@@ -39,10 +39,9 @@ public class TeacherController {
     public TeacherResponse changeRole(@PathVariable("id") Long id,@RequestBody ChangeRoleRequest request){
         return service.changeRole(id,request);
     }
-//    @GetMapping
-//    public UserResponseView getAllUsers(@RequestParam(name = "text",required = false)String text,
-//                                               @RequestParam int page,
-//                                               @RequestParam int size){
-//        return userService.searchAndPagination(text,page,size);
-//    }
+    @GetMapping("all")
+    public List<TeacherResponse> getAllTeachers(){
+        return service.getAllTeacher();
+    }
+
 }
