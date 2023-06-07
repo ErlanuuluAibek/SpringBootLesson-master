@@ -18,6 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.email =:email")
     User getUserByEmail(@Param("email") String email);
 
+    Optional<User>findByEmail(String email);
     @Query("select  u from User u where  upper(u.firstName) like  concat('%',:text,'%')" +
             "or  upper(u.lastName) like  concat('%',:text,'%')" +
             "or  upper(u.role) like  concat('%',:text,'%')" +

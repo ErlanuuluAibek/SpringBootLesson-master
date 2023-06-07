@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping("/api/companies")
 @Tag(name = "Company Auth",description = "We can create new Company")
 public class CompanyController {

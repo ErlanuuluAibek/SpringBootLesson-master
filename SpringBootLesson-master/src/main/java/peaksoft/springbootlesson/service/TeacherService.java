@@ -76,6 +76,9 @@ public class TeacherService {
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        Course course = courseRepository.findById(request.getCourseId()).get();
+        user.setCourse(course);
+
         teacherRepository.save(user);
         return mapToResponse(user);
     }

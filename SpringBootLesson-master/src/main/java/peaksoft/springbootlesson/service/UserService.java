@@ -29,7 +29,7 @@ public class UserService {
         user.setLastName(request.getLastName());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.valueOf(request.getRoleName()));
-        user.setCreatedDate(LocalDate.now());
+        user.setLocalDate(LocalDate.now());
         userRepository.save(user);
         return mapToResponse(user);
     }
@@ -40,7 +40,7 @@ public class UserService {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .roleName(user.getRole().name())
-                .localDate(user.getCreatedDate()).build();
+                .localDate(user.getLocalDate()).build();
 
     }
     public UserResponse changeRole(Long userId, ChangeRoleRequest request){
