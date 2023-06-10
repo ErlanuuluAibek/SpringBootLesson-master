@@ -1,5 +1,6 @@
 package peaksoft.springbootlesson.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,8 +23,7 @@ public class Group {
     private String dateOfStart;
     @Column(name = "date_of_finish")
     private String dateOfFinish;
-//    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH} ,mappedBy = "groups")
-//    private List<Course> courses;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "group")
+    @JsonIgnore
     private List<User> students;
 }
